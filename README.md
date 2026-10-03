@@ -105,9 +105,3 @@ Generated schemas are in [schemas/0.1](schemas/0.1/); examples are in
 [examples](examples/). Test signing keys are public fixtures, never operational keys.
 Checks do not simulate a real blockchain, checkout, logistics provider or reputation
 community. See [conformance](docs/conformance.md) for the precise boundary.
-
-There are no imports from ADDP, no parent environment requirement and no automatic
-compatibility with ADDP 0.1. The planned repository is
-`famfamfam/agent-market-protocol`; this text is not a claim that it is already online.
-
-Contributions: [CONTRIBUTING](CONTRIBUTING.md). License: [Apache-2.0](LICENSE).
