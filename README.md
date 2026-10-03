@@ -1,4 +1,4 @@
-**English** | [Русский](README.ru.md)
+**English** | [Русский](README.ru.md) | [Español](README.es.md) | [简体中文](README.zh-CN.md)
 
 # Agent Market Protocol
 
@@ -85,7 +85,7 @@ Start with [the specification](SPEC.md), then [the integration guide](docs/integ
 | [Conformance](docs/conformance.md) | Role requirements and executable/documentary checks |
 | [Roadmap](docs/roadmap.md) | Implementation dependencies and acceptance gates |
 | [Prior art](docs/prior-art.md) | Dated comparisons and limits of compatibility claims |
-| [Publishing](docs/publishing.md) | Moving and publishing this standalone package |
+| [Releases](docs/publishing.md) | Checks and steps for publishing a new draft |
 
 ## Validate this package
 
