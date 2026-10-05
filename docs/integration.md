@@ -2,6 +2,9 @@
 
 Informative. This is a design-time guide, not an installer for an existing service.
 
+Start with [AMP in five minutes](how-it-works.md) for the purchase journey,
+integration levels and failure-recovery diagrams.
+
 ## A seller's shortest path
 
 1. Map the existing product export to Product, Variant and Offer. Keep IDs stable.

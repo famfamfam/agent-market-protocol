@@ -17,6 +17,10 @@ una red en funcionamiento, un plugin para tiendas, una integración de pagos de
 producción ni un registro desplegado. Publicar un catálogo no hace que todos los
 asistentes de IA existentes puedan utilizarlo automáticamente.
 
+**Empieza por [AMP en cinco minutos](docs/how-it-works.es.md):** una compra concreta,
+niveles de integración, participación de marketplaces y diagramas de recuperación
+cuando faltan cambios del catálogo o se pierde la respuesta de un pedido.
+
 ## Recorrido del comprador
 
 «Encuentra un portátil por menos de 1.000 EUR, con entrega en Berlín y al menos
@@ -48,15 +52,30 @@ Son objetivos de diseño, no cifras demostradas de ventas o rendimiento.
 ## Arquitectura
 
 ```mermaid
-flowchart LR
-    R[Registro compartido de catálogos en cadena] --> I[Índice A]
-    R --> J[Índice B]
-    S[Catálogos de vendedores: instantáneas y cambios] --> I
-    S --> J
-    I --> A[Agente del comprador]
-    J --> A
-    A --> C[Compra con el vendedor o marketplace]
+flowchart TD
+    R["Registro: catálogos y claves de publicación"] -.-> I["Índices independientes"]
+    S["Catálogos: instantáneas y cambios"] --> I
+    I --> A["Agente: buscar, comparar y explicar"]
+    U["Comprador"] -->|"Petición"| A
+    A --> Q["Cotización actual del vendedor"]
+    Q --> V["La aplicación verifica condiciones y permiso"]
+    U -->|"Permiso"| V
+    V --> C["Compra con el vendedor o marketplace"]
+    C --> O["Pedido confirmado"]
+    classDef source fill:#e0f2fe,stroke:#0369a1,color:#0c4a6e
+    classDef buyer fill:#f3e8ff,stroke:#7e22ce,color:#581c87
+    classDef guard fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef merchant fill:#fff7ed,stroke:#c2410c,color:#7c2d12
+    class R,S,I source
+    class U,A buyer
+    class V guard
+    class Q,C,O merchant
 ```
+
+Este es el recorrido de una compra completada. El agente propone; el código de la
+aplicación comprueba los límites; el operador verifica la autoridad por su cuenta.
+Los resultados pendientes o desconocidos se explican en la
+[guía visual](docs/how-it-works.es.md).
 
 Registrar y renovar un catálogo en el registro compartido en cadena requiere el
 token de servicio de la red. Los catálogos, las búsquedas, los pedidos personales

@@ -15,6 +15,10 @@ specification, schemas, examples and document checks. It does not contain a runn
 network, store plugin, production payment integration or deployed registry.
 Publishing a catalog does not make every existing AI assistant able to use it.
 
+**Start with [AMP in five minutes](docs/how-it-works.md):** a concrete purchase,
+store integration levels, marketplace participation, and diagrams showing recovery
+when catalog updates or an order response are lost.
+
 ## A buyer's journey
 
 “Find a laptop under EUR 1,000 delivered to Berlin, with at least 16 GB RAM.”
@@ -45,15 +49,29 @@ These are design goals, not measured sales or performance claims.
 ## Architecture
 
 ```mermaid
-flowchart LR
-    R[Shared on-chain catalog registry] --> I[Index A]
-    R --> J[Index B]
-    S[Seller catalogs: snapshots and changes] --> I
-    S --> J
-    I --> A[Buyer agent runtime]
-    J --> A
-    A --> C[Seller or marketplace checkout]
+flowchart TD
+    R["Registry: catalogs and publisher keys"] -.-> I["Independent indexes"]
+    S["Seller catalogs: snapshots and changes"] --> I
+    I --> A["Agent: find, compare and explain"]
+    U["Buyer"] -->|"Request"| A
+    A --> Q["Current seller quote"]
+    Q --> V["Application checks conditions and permission"]
+    U -->|"Permission"| V
+    V --> C["Seller or marketplace checkout"]
+    C --> O["Confirmed order"]
+    classDef source fill:#e0f2fe,stroke:#0369a1,color:#0c4a6e
+    classDef buyer fill:#f3e8ff,stroke:#7e22ce,color:#581c87
+    classDef guard fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef merchant fill:#fff7ed,stroke:#c2410c,color:#7c2d12
+    class R,S,I source
+    class U,A buyer
+    class V guard
+    class Q,C,O merchant
 ```
+
+This is the successful purchase path. The agent proposes; application code checks
+the buyer's limits; the checkout operator independently verifies authority. Pending
+or unknown results remain unresolved, as shown in the [visual guide](docs/how-it-works.md).
 
 Registration and renewal in the shared on-chain registry require the network's
 service token. Catalogs, searches, personal orders and reviews remain off-chain.

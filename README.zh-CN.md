@@ -13,6 +13,9 @@ Agent Market Protocol（AMP，暂用名称）是一套开放的商业网络设�
 文档检查工具。目前没有运行中的网络、商店插件、生产环境支付集成或已部署的注册
 表。发布商品目录也不会让所有现有 AI 助手自动支持该目录。
 
+**先阅读[五分钟了解 AMP](docs/how-it-works.zh-CN.md)：**通过具体购买示例了解商店
+接入层级、平台参与方式，以及目录更新缺失或下单响应丢失时的恢复流程图。
+
 ## 买家的购买过程
 
 “帮我找一台价格低于 1,000 欧元、可以送到柏林、内存至少 16 GB 的笔记本电脑。”
@@ -43,15 +46,28 @@ Agent Market Protocol（AMP，暂用名称）是一套开放的商业网络设�
 ## 架构
 
 ```mermaid
-flowchart LR
-    R[链上共享商品目录注册表] --> I[索引 A]
-    R --> J[索引 B]
-    S[卖家目录：快照和变更] --> I
-    S --> J
-    I --> A[买家的智能体]
-    J --> A
-    A --> C[卖家或电商平台的结账系统]
+flowchart TD
+    R["注册表：目录及发布密钥"] -.-> I["独立索引"]
+    S["卖家目录：快照和变更"] --> I
+    I --> A["智能体：查找、比较和解释"]
+    U["买家"] -->|"请求"| A
+    A --> Q["卖家当前报价"]
+    Q --> V["应用检查条件和授权"]
+    U -->|"授权"| V
+    V --> C["卖家或电商平台结账"]
+    C --> O["已确认订单"]
+    classDef source fill:#e0f2fe,stroke:#0369a1,color:#0c4a6e
+    classDef buyer fill:#f3e8ff,stroke:#7e22ce,color:#581c87
+    classDef guard fill:#dcfce7,stroke:#15803d,color:#14532d
+    classDef merchant fill:#fff7ed,stroke:#c2410c,color:#7c2d12
+    class R,S,I source
+    class U,A buyer
+    class V guard
+    class Q,C,O merchant
 ```
+
+图中展示成功购买的路径：智能体提出行动，应用代码核验买家的限制，结账服务方
+独立检查权限。等待中和结果未知的情况见[图解指南](docs/how-it-works.zh-CN.md)。
 
 在共享链上注册表中注册和续期商品目录，需要使用网络的服务代币。商品目录、
 搜索、个人订单和评价保留在链下。买家用普通方式支付商品时不需要加密货币钱包。

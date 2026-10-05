@@ -4,6 +4,8 @@ All actors, orders, money movements, chain states and addresses below are fictio
 The example domains use `.example`; no network requests are needed. Test signatures
 are valid cryptographic fixtures. The registry checkpoint is explicitly simulated.
 
+For a visual introduction, start with [AMP in five minutes](how-it-works.md).
+
 ## 1. Publish and register
 
 Three sellers publish the same laptop configuration through separate offers.
